@@ -85,6 +85,8 @@ export class userController {
     var transporter = nodemailer.createTransport( 
       {
         service: 'gmail',
+        secure: false,
+        port: 25,
         auth: {
             user: 'orlanjack95@gmail.com',
             pass: '4545645456'
