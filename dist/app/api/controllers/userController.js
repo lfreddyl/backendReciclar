@@ -26,7 +26,7 @@ exports.userController = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const responseServices_1 = require("../responses/responseServices");
 const userService_1 = __importDefault(require("../services/userService"));
-const nodemailer = __importStar(require("nodemailer"));
+const nodemailer = require("nodemailer");
 class userController {
     constructor() {
         this.user_service = new userService_1.default();
