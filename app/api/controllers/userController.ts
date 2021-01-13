@@ -104,8 +104,8 @@ export class userController {
               var mailOptions = { 
                 from : 'orlanjack95@gmail.com', 
                 to : req.params.correo, 
-                subject : 'Contraseña', 
-                text: 'Hola desde la plataforma de reciclamos, tu contraseña de acceso es: '+user_data.password 
+                subject : 'Contrasena', 
+                text: 'Hola desde la plataforma de reciclamos, tu contrasena de acceso es: '+user_data.password 
               }; 
               transporter.sendMail( mailOptions, (error, info) => { 
                 if (error) { 
