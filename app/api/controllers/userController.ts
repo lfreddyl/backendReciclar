@@ -100,7 +100,11 @@ export class userController {
           if (err) {
             mongoError(err, res);
           } else {
-            if(user_data!==null){
+            if(user_data===null){
+              failureResponse("Usuario no encontrado, correo no enviado", null, res);
+
+            }
+            else{
               var mailOptions = { 
                 from : 'orlanjack95@gmail.com', 
                 to : req.params.correo, 
@@ -116,9 +120,6 @@ export class userController {
 
                 }
               }); 
-            }
-            else{
-              failureResponse("Usuario no encontrado, correo no enviado", null, res);
             }
             
           }
