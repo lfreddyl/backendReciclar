@@ -183,6 +183,53 @@ class publicacionController {
             responseServices_1.insufficientParameters(res);
         }
     }
+    get_PublicacionByCategoria(req, res) {
+        if (req.params.cadenaBusqueda) {
+            const query = {
+                'residuos.descripcion': { $regex: req.params.cadenaBusqueda, $options: "i" },
+            };
+            const queryagregate = [
+                {
+                    $lookup: {
+                        from: "usuarios",
+                        localField: "id_usuario",
+                        foreignField: "_id",
+                        as: "user",
+                    },
+                },
+                { $unwind: "$user" },
+                { $match: query },
+                {
+                    $project: {
+                        _id: 1,
+                        descripcion: 1,
+                        img: 1,
+                        cantidad: 1,
+                        direccion: 1,
+                        fecha: 1,
+                        estado: 1,
+                        residuos: 1,
+                        nombres: "$user.nombres",
+                        apellidos: "$user.apellidos",
+                        imguser: "$user.img",
+                        _iduser: "$user._id",
+                    },
+                },
+            ];
+            const queryOrder = { fecha: -1 };
+            this.publicacion_service.filterByUser(queryagregate, queryOrder, (err, store_data) => {
+                if (err) {
+                    responseServices_1.mongoError(err, res);
+                }
+                else {
+                    responseServices_1.successResponse(responseServices_1.sms_get, store_data, res);
+                }
+            });
+        }
+        else {
+            responseServices_1.insufficientParameters(res);
+        }
+    }
     find_publicacionByEstado(req, res) {
         if (req.params.estado) {
             const query = { estado: req.params.estado };

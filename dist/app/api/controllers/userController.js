@@ -176,38 +176,24 @@ class userController {
             if (longitudArray <= 4) {
                 for (let index = 0; index < longitudArray; index++) {
                     const user_filter = {
-                        apellidos: { $regex: cadenaArray[index], $options: "i" },
+                        nombres: { $regex: cadenaArray[index], $options: "i" },
                     };
                     this.user_service.filterUserAll(user_filter, (err, user_data) => {
                         if (err) {
                             responseServices_1.mongoError(err, res);
                         }
                         else {
-                            if (user_data.length > 1) {
-                                responseServices_1.successResponse("get user successfull", user_data, res);
+                            if (user_data.length > 0) {
+                                console.log(user_data.length);
                                 busquedaEncontrada = true;
+                                responseServices_1.successResponse("get user successfull", user_data, res);
+                                return;
                             }
                             else {
-                                const user_filter = {
-                                    nombres: { $regex: cadenaArray[index], $options: "i" },
-                                };
-                                this.user_service.filterUserAll(user_filter, (err, user_data) => {
-                                    if (err) {
-                                        responseServices_1.mongoError(err, res);
-                                    }
-                                    else {
-                                        if (user_data.length > 1) {
-                                            responseServices_1.successResponse("get user successfull", user_data, res);
-                                            busquedaEncontrada = true;
-                                        }
-                                        else {
-                                            if (!busquedaEncontrada && (index === longitudArray - 1)) {
-                                                console.log(longitudArray - 1);
-                                                responseServices_1.successResponse("get user successfull", [], res);
-                                            }
-                                        }
-                                    }
-                                });
+                                if (!busquedaEncontrada && (index === longitudArray - 1)) {
+                                    responseServices_1.successResponse("get user successfull", [], res);
+                                    return;
+                                }
                             }
                         }
                     });

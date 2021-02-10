@@ -134,6 +134,10 @@ class router {
             .get((req, res) => {
             this.publicacionController.get_PublicacionByDescripcion(req, res);
         });
+        app.route('/publicacionesByCategoria/:cadenaBusqueda')
+            .get((req, res) => {
+            this.publicacionController.get_PublicacionByCategoria(req, res);
+        });
         app.route('/publicacioness/:page')
             .get((req, res) => {
             this.publicacionController.get_AllPublicacion(req, res);

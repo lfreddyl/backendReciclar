@@ -203,6 +203,56 @@ export class publicacionController {
       insufficientParameters(res);
     }
   }
+
+  public get_PublicacionByCategoria(req: Request, res: Response) {
+    if (req.params.cadenaBusqueda) {
+      const query = {
+        'residuos.descripcion': { $regex: req.params.cadenaBusqueda, $options: "i" },
+      };
+      const queryagregate = [
+        {
+          $lookup: {
+            from: "usuarios",
+            localField: "id_usuario",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        { $unwind: "$user" },
+        { $match: query },
+        {
+          $project: {
+            _id: 1,
+            descripcion: 1,
+            img: 1,
+            cantidad: 1,
+            direccion: 1,
+            fecha: 1,
+            estado: 1,
+            residuos: 1,
+            nombres: "$user.nombres",
+            apellidos: "$user.apellidos",
+            imguser: "$user.img",
+            _iduser: "$user._id",
+          },
+        },
+      ];
+      const queryOrder = { fecha: -1 };
+      this.publicacion_service.filterByUser(
+        queryagregate,
+        queryOrder,
+        (err: any, store_data: any) => {
+          if (err) {
+            mongoError(err, res);
+          } else {
+            successResponse(sms_get, store_data, res);
+          }
+        }
+      );
+    } else {
+      insufficientParameters(res);
+    }
+  }
   
   public find_publicacionByEstado(req: Request, res: Response) {
     if (req.params.estado) {
