@@ -183,6 +183,10 @@ export class router{
         .get((req: Request, res: Response) => {
             this.publicacionController.get_AllPublicacion(req,res);
         })
+        app.route('/publicacionesCount')
+        .get((req: Request, res: Response) => {
+            this.publicacionController.countPublicacion(req,res);
+        })
         app.route('/publicaciones')
         .post((req: Request, res: Response) => {
             this.publicacionController.create_publicacion(req,res);

@@ -20,6 +20,10 @@ class publicacionService {
     filterPublicacionAll(query, queryOrder, callback) {
         publicacion.find(query, callback).sort(queryOrder);
     }
+    count(query, callback) {
+        //  order.aggregate([{$lookup:{  from: "users",localField: "user_id",foreignField: "_id",as: "user"}},{$unwind: "$user"},{$match:{query}}])
+        publicacion.aggregate(query).exec(callback);
+    }
     filterByUser(query, queryOrder, callback) {
         //  order.aggregate([{$lookup:{  from: "users",localField: "user_id",foreignField: "_id",as: "user"}},{$unwind: "$user"},{$match:{query}}])
         publicacion.aggregate(query).sort(queryOrder).exec(callback);

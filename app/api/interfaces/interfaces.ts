@@ -39,7 +39,8 @@ export interface interfaceChat {
     id_emisor:String,
     fecha: Date,
     delete?:Boolean,
-    leido?:Boolean
+    leido_receptor?:Boolean
+    leido_emisor?:Boolean
 
 }
 export interface interfaceMensaje {

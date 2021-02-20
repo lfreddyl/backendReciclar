@@ -18,7 +18,8 @@ class chatController {
                 id_emisor: req.body.id_emisor,
                 id_receptor: req.body.id_receptor,
                 fecha: req.body.fecha,
-                leido: false
+                leido_emisor: false,
+                leido_receptor: false
             };
             this.chat_service.createChat(store_params, (err, store_data) => {
                 if (err) {
@@ -122,7 +123,8 @@ class chatController {
                         id_receptor: store_data.id_receptor,
                         delete: store_data.delete,
                         fecha: store_data.fecha,
-                        leido: req.body.leido
+                        leido_emisor: req.body.leido_emisor,
+                        leido_receptor: req.body.leido_receptor
                     };
                     this.chat_service.updateChat(store_params, (err) => {
                         if (err) {

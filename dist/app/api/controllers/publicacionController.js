@@ -277,7 +277,7 @@ class publicacionController {
     }
     get_AllPublicacion(req, res) {
         const query = { estado: "pendiente" };
-        const PAGE_SIZE = 30;
+        const PAGE_SIZE = 5;
         const page = parseInt(req.params.page);
         const skip = (page - 1) * PAGE_SIZE;
         const order_filter = { fecha: -1 };
@@ -312,6 +312,26 @@ class publicacionController {
             { $limit: PAGE_SIZE },
         ];
         this.publicacion_service.filterByUser(queryagregate, order_filter, (err, publicacion_data) => {
+            if (err) {
+                responseServices_1.mongoError(err, res);
+            }
+            else {
+                responseServices_1.successResponse(responseServices_1.sms_get, publicacion_data, res);
+            }
+        });
+    }
+    countPublicacion(req, res) {
+        const query = { estado: "pendiente" };
+        const order_filter = { _id: 1 };
+        const queryagregate = [
+            {
+                $group: {
+                    _id: null,
+                    count: { $sum: 1 }
+                }
+            }
+        ];
+        this.publicacion_service.count(queryagregate, (err, publicacion_data) => {
             if (err) {
                 responseServices_1.mongoError(err, res);
             }

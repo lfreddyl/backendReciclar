@@ -142,6 +142,10 @@ class router {
             .get((req, res) => {
             this.publicacionController.get_AllPublicacion(req, res);
         });
+        app.route('/publicacionesCount')
+            .get((req, res) => {
+            this.publicacionController.countPublicacion(req, res);
+        });
         app.route('/publicaciones')
             .post((req, res) => {
             this.publicacionController.create_publicacion(req, res);

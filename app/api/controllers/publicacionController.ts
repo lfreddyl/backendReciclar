@@ -304,7 +304,7 @@ export class publicacionController {
 
   public get_AllPublicacion(req: Request, res: Response) {
     const query = { estado: "pendiente" };
-    const PAGE_SIZE = 30;
+    const PAGE_SIZE = 5;
     const page = parseInt(req.params.page);
     const skip = (page - 1) * PAGE_SIZE;
     const order_filter = { fecha: -1 };
@@ -337,6 +337,7 @@ export class publicacionController {
       },
       { $skip: (page - 1) * PAGE_SIZE },
       { $limit: PAGE_SIZE },
+
     ];
 
     this.publicacion_service.filterByUser(
@@ -351,6 +352,32 @@ export class publicacionController {
       }
     );
   }
+  
+  public countPublicacion(req: Request, res: Response) {
+    const query = { estado: "pendiente" };
+    const order_filter={_id:1}
+    const queryagregate = [
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+       }
+      }
+    ];
+
+    this.publicacion_service.count(
+      queryagregate,
+      
+      (err: any, publicacion_data: any) => {
+        if (err) {
+          mongoError(err, res);
+        } else {
+          successResponse(sms_get, publicacion_data, res);
+        }
+      }
+    );
+  }
+  
 
   public update_publicacion(req: Request, res: Response) {
     if (
