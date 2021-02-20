@@ -7,7 +7,7 @@ export const ChatSchema = new Schema({
     id_receptor:{type: Schema.Types.ObjectId,ref:"usuarios", required:'El  userid es requerido'},
     fecha: {type:Date,required:'La fecha es requerida'},
     delete: {type:Boolean,default:false},
-    leido_receptor:{Boolean},
-    leido_emisor:{Boolean}
+    leido:{Boolean},
+
 
 },{ versionKey: false });

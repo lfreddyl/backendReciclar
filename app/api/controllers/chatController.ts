@@ -19,8 +19,7 @@ export class chatController{
                 id_emisor:req.body.id_emisor,
                 id_receptor:req.body.id_receptor,
                 fecha:req.body.fecha,
-                leido_emisor:false,
-                leido_receptor:false
+                leido:false,
             };
             this.chat_service.createChat(store_params, (err: any, store_data: interfaceChat) => {
                 if (err) {
@@ -124,8 +123,7 @@ export class chatController{
                         id_receptor: store_data.id_receptor,
                         delete: store_data.delete,
                         fecha: store_data.fecha,
-                        leido_emisor: req.body.leido_emisor,
-                        leido_receptor: req.body.leido_receptor
+                        leido: req.body.leido,
 
 
                     };
